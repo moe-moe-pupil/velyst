@@ -12,7 +12,7 @@ readme = "README.md"
 [workspace.dependencies]
 # Bevy dependencies
 bevy = { version = "0.17.3", default-features = false }
-bevy_vello = "0.11.0"
+bevy_vello = "0.12.1"
 # Vello dependencies
 vello = "0.6.0"
 vello_svg = "0.8.0"

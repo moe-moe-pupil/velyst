@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
-members = ["crates/*", ]
+members = ["crates/*", "examples/*"]
+exclude = ["/.github/"]
 
 [workspace.package]
 version = "0.1.0"
@@ -10,24 +11,38 @@ repository = "https://github.com/voxell-tech/velyst"
 readme = "README.md"
 
 [workspace.dependencies]
+velyst = { path = "crates/velyst", version = "0.1.0" }
+typst_imaging = { path = "crates/typst_imaging", version = "0.1.0" }
+kanva = { path = "crates/kanva", version = "0.1.0" }
+kanva_svg = { path = "crates/kanva_svg", version = "0.1.0" }
+kanva_typst = { path = "crates/kanva_typst", version = "0.1.0" }
+
 # Bevy dependencies
-bevy = { version = "0.17.3", default-features = false }
-bevy_vello = "0.12.1"
-# Vello dependencies
-vello = "0.6.0"
-vello_svg = "0.8.0"
+bevy = { version = "0.19", default-features = false }
+bevy_vello = "0.14"
+# Imaging dependencies
+imaging = { version = "0.0.1", default-features = false }
+svg_imaging = { version = "0.0.1", default-features = false }
+imaging_vello = { version = "0.0.2", default-features = false, features = ["vello-0-9"] }
 # Typst dependencies
-typst = "0.14.0"
-typst-library = "0.14.0"
-typst-eval = "0.14.0"
-typst-layout = "0.14.0"
-typst-assets = "0.14.0"
+typst = "0.15"
+typst-library = "0.15"
+typst-eval = "0.15"
+typst-layout = "0.15"
+typst-assets = "0.15"
 # In sync with Typst:
 unicode-math-class = "0.1"
-ttf-parser = "0.25.1"
-hayro = "0.4"
+ttf-parser = "0.25"
+hayro-svg = "0.7"
+usvg = { version = "0.47.0", default-features = false, features = ["text"] }
+image = { version = "0.25", default-features = false }
 # Other
-chrono = { version = "0.4.24", default-features = false, features = ["clock", "std"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+ureq = "2"
+flate2 = "1"
+tar = "0.4"
+dirs = "5"
+hashbrown = "0.17"
 ecow = { version = "0.2", features = ["serde"] }
 thiserror = "1"
 smallvec = "1"
@@ -37,47 +52,6 @@ paste = "1"
 redundant_type_annotations = "warn"
 bool_comparison = "allow"
 type_complexity = "allow"
-
-[package]
-name = "velyst"
-description = "A Typst integration for Vello and Bevy."
-exclude = ["/assets/", "/.github/", "/examples/"]
-version.workspace = true
-edition.workspace = true
-license.workspace = true
-repository.workspace = true
-readme.workspace = true
-
-[dependencies]
-# Local dependencies
-typst_element = { path = "crates/typst_element", version = "0.1.0" }
-typst_vello = { path = "crates/typst_vello", version = "0.1.0" }
-
-bevy = { workspace = true, features = ["bevy_log"] }
-bevy_vello = { workspace = true, features = ["svg"] }
-typst = { workspace = true }
-typst-eval = { workspace = true }
-typst-layout = { workspace = true }
-typst-assets = { workspace = true, optional = true }
-chrono = { workspace = true }
-ecow = { workspace = true }
-thiserror = { workspace = true }
-smallvec = { workspace = true }
-
-[features]
-default = ["embed-fonts"]
-embed-fonts = ["dep:typst-assets", "typst-assets/fonts"]
-
-[dev-dependencies]
-bevy = { workspace = true, features = [
-  "file_watcher",
-  "x11",
-  "wayland",
-] }
-bevy_vello = { workspace = true, features = ["svg"] }
-
-[lints]
-workspace = true
 
 # Enable a small amount of optimization in the dev profile.
 [profile.dev]
